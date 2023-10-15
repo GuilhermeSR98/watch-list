@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Serie;
+use App\Models\Series;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
@@ -13,7 +13,7 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Serie::with(['seasons'])->get();
+        $series = Series::with(['seasons'])->get();
         return view('series.index')->with('series', $series);
     }
 
@@ -31,7 +31,7 @@ class SeriesController extends Controller
     public function store(Request $request)
     {
         try {
-            $series = Serie::create($request->all());
+            $series = Series::create($request->all());
         } catch (\Throwable $th) {
 
             return to_route('series.index')
@@ -53,7 +53,7 @@ class SeriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Serie $series)
+    public function edit(Series $series)
     {
         return view('series.edit')
             ->with('series', $series);
@@ -62,7 +62,7 @@ class SeriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Serie $series, Request $request)
+    public function update(Series $series, Request $request)
     {
         try {
             $series->fill($request->all());
@@ -80,7 +80,7 @@ class SeriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Serie $series)
+    public function destroy(Series $series)
     {
         $series->delete();
 
