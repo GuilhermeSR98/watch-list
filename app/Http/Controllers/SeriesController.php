@@ -13,8 +13,7 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Serie::all();
-        // dd($series);
+        $series = Serie::with(['seasons'])->get();
         return view('series.index')->with('series', $series);
     }
 
