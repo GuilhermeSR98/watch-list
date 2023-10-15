@@ -54,17 +54,28 @@ class SeriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Serie $series)
     {
-        //
+        return view('series.edit')
+            ->with('series', $series);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Serie $series, Request $request)
     {
-        //
+        try {
+            $series->fill($request->all());
+            $series->save();
+        } catch (\Throwable $th) {
+
+            return to_route('series.index')
+                ->with('error', "Não foi possível editar a série {$series->name}");
+        }
+
+        return to_route('series.index')
+            ->with('success', "Série {$series->name} editada com sucesso");
     }
 
     /**
