@@ -31,8 +31,16 @@ class SeriesController extends Controller
      */
     public function store(Request $request)
     {
-        Serie::create($request->all());
-        return to_route('series.index');
+        try {
+            $series = Serie::create($request->all());
+        } catch (\Throwable $th) {
+
+            return to_route('series.index')
+                ->with('error', "Não foi possível adicionar a série {$request->name}");
+        }
+
+        return to_route('series.index')
+            ->with('success', "Série {$series->name} criada com sucesso");
     }
 
     /**
@@ -62,9 +70,11 @@ class SeriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Serie $series)
     {
-        Serie::destroy($id);
-        return to_route('series.index');
+        $series->delete();
+
+        return to_route('series.index')
+            ->with('success', "Série {$series->name} excluída com sucesso.");
     }
 }
