@@ -31,8 +31,8 @@ class SeriesController extends Controller
      */
     public function store(Request $request)
     {
-        Serie::create($request->name);
-        return redirect('/series');
+        Serie::create($request->all());
+        return to_route('series.index');
     }
 
     /**
@@ -64,6 +64,7 @@ class SeriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Serie::destroy($id);
+        return to_route('series.index');
     }
 }
