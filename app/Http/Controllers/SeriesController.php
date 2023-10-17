@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Episode;
-use App\Models\Season;
 use App\Models\Series;
+use App\Repository\SeriesRepository;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
+    public function __construct(private SeriesRepository $repository)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -32,38 +34,10 @@ class SeriesController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $series = Series::create($request->all());
-
-            $seasons = [];
-
-            for ($i = 1; $i <= $request->seasons; $i++) {
-                $seasons[] = [
-                    'series_id' => $series->id,
-                    'number' => $i,
-                ];
-            }
-
-            Season::insert($seasons);
-
-            $episodes = [];
-            foreach ($series->seasons as $season) {
-                for ($j = 1; $j <= $request->episodes; $j++) {
-                    $episodes[] = [
-                        'season_id' => $season->id,
-                        'number' => $j,
-                    ];
-                }
-            }
-            Episode::insert($episodes);
-        } catch (\Throwable $th) {
-
-            return to_route('series.index')
-                ->with('error', "Não foi possível adicionar a série {$request->name}");
-        }
+        $this->repository->createSerie($request);
 
         return to_route('series.index')
-            ->with('success', "Série {$series->name} criada com sucesso");
+            ->with('success', "Série $request->name criada com sucesso");
     }
 
     /**
