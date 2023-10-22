@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Episode;
 use App\Models\Season;
 use App\Models\Series;
 use Illuminate\Http\Request;
@@ -53,9 +54,16 @@ class EpisodesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Series $series,  Season $season)
     {
-        //
+        $watchedEpisodes = $request->episodes;
+        $season->episodes->each(function (Episode $episode) use ($watchedEpisodes) {
+            $episode->watched = in_array($episode->id, $watchedEpisodes);
+        });
+
+        $season->push();
+
+        return to_route('episodes.index', [$series, $season]);
     }
 
     /**

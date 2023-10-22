@@ -5,7 +5,6 @@ use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\SinopseController;
 use App\Http\Controllers\SugestionController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +32,5 @@ Route::get('/series/{series}/seasons', [SeasonsController::class, 'index'])->nam
 
 Route::get('/series/{series}/season/{season}/episodes', [EpisodesController::class, 'index'])->name('episodes.index');
 
-Route::post('/series/{series}/season/{season}/episodes', function (Request $request) {
-    dd($request->all());
-});
+Route::put('/series/{series}/seasons/{season}/episodes', [EpisodesController::class, 'update'])->name('episodes.update');
+

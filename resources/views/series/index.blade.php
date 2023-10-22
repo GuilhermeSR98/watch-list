@@ -18,7 +18,7 @@
     <a class="btn btn-dark mb-3" href="{{ route('sugestion.index') }}">Sugerir Série</a>
     <ul class="list-group">
         @foreach ($series as $serie)
-            <li class="list-group-item d-flex justify-content-between">{{ $serie->name }}
+            <li class="list-group-item d-flex justify-content-between align-items-center">{{ $serie->name }}
                 <div class="d-flex">
                     <a class="btn btn-sm btn-primary d-flex p-2 rounded me-3"
                         href="{{ route('sinopse.index', $serie) }}">
