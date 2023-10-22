@@ -3,6 +3,8 @@
 use App\Http\Controllers\EpisodesController;
 use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\SinopseController;
+use App\Http\Controllers\SugestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,10 @@ Route::get('/', function () {
 });
 
 Route::resource('/series', SeriesController::class);
+
+Route::resource('/sugestion', SugestionController::class);
+
+Route::get('/series/{series}/sinopse', [SinopseController::class, 'index'])->name('sinopse.index');
 
 Route::get('/series/{series}/seasons', [SeasonsController::class, 'index'])->name('seasons.index');
 
