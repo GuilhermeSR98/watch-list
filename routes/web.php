@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\EpisodesController;
 use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\SeriesController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +24,9 @@ Route::get('/', function () {
 Route::resource('/series', SeriesController::class);
 
 Route::get('/series/{series}/seasons', [SeasonsController::class, 'index'])->name('seasons.index');
+
+Route::get('/series/{series}/season/{season}/episodes', [EpisodesController::class, 'index'])->name('episodes.index');
+
+Route::post('/series/{series}/season/{season}/episodes', function (Request $request) {
+    dd($request->all());
+});

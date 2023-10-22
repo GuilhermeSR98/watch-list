@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Season;
 use App\Models\Series;
 use Illuminate\Http\Request;
 
-class SeasonsController extends Controller
+class EpisodesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Series $series)
+    public function index(Series $series, Season $season)
     {
-        $seasons = $series->seasons()->with('episodes')->get();
-
-        return view('seasons.index', compact('series', 'seasons'));
+        $episodes = $season->episodes;
+        return view('episodes.index', compact('series', 'season', 'episodes'));
     }
 
     /**
